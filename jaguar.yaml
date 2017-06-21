@@ -1,2 +1,2 @@
 serializers:
-  - lib/api.dart
+  - lib/model/model.dart

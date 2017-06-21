@@ -1,13 +1,21 @@
-part of boilerplate_mongo.api;
+library boilerplate_postgresql.model;
+
+import 'package:jaguar_serializer/serializer.dart';
+
+part 'model.g.dart';
 
 class TodoItem {
   String id;
 
   String title;
 
-  String message;
-
   bool finished;
+
+  void clone(final TodoItem other) {
+    id = other.id;
+    title = other.title;
+    finished = other.finished;
+  }
 }
 
 @GenSerializer()

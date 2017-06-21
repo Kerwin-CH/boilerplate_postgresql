@@ -1,20 +1,17 @@
 // Copyright (c) 2017, teja. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-library boilerplate_mongo.api;
+library boilerplate_postgresql.api;
 
 import 'dart:async';
 import 'package:postgresql/postgresql.dart' as pg;
 import 'package:jaguar/jaguar.dart';
-import 'package:jaguar_serializer/serializer.dart';
 import 'package:jaguar_postgresql/jaguar_postgresql.dart';
 import 'package:jaguar_query_postgresql/jaguar_query_postgresql.dart';
 import 'package:ulid/ulid.dart';
+import 'package:boilerplate_postgresql/model/model.dart';
 
 part 'bean.dart';
-part 'model.dart';
-
-part 'api.g.dart';
 
 const String postgreUrl = "postgres://postgres:dart_jaguar@localhost/todos";
 
@@ -32,6 +29,7 @@ class TodoApi {
   @Get()
   Future<Response<String>> getAll(Context ctx) async {
     final TodoItemBean bean = mkBean(ctx);
+
     List<TodoItem> res = await bean.findAll();
     return Response.json(todoItemSerializer.serialize(res));
   }
@@ -40,6 +38,7 @@ class TodoApi {
   Future<Response<String>> getById(Context ctx) async {
     String id = ctx.pathParams['id'];
     final TodoItemBean bean = mkBean(ctx);
+
     TodoItem res = await bean.findOne(id);
     return Response.json(todoItemSerializer.serialize(res));
   }
@@ -48,12 +47,13 @@ class TodoApi {
   Future<Response<String>> insert(Context ctx) async {
     final Map body = await ctx.req.bodyAsJsonMap();
     final TodoItem todo = todoItemSerializer.fromMap(body);
+    todo.finished = false;
     final TodoItemBean bean = mkBean(ctx);
     final String id = new Ulid().toUuid();
     todo.id = id;
     await bean.insert(todo);
 
-    TodoItem res = await bean.findOne(id);
+    List<TodoItem> res = await bean.findAll();
     return Response.json(todoItemSerializer.serialize(res));
   }
 
@@ -90,15 +90,20 @@ class TodoApi {
   }
 
   @Delete(path: '/:id')
-  Future deleteById(Context ctx) async {
+  Future<Response<String>> deleteById(Context ctx) async {
     String id = ctx.pathParams['id'];
     final TodoItemBean bean = mkBean(ctx);
     await bean.delete(id);
+
+    List<TodoItem> res = await bean.findAll();
+    return Response.json(todoItemSerializer.serialize(res));
   }
 
   @Delete()
-  Future deleteAll(Context ctx) async {
+  Future<Response<String>> deleteAll(Context ctx) async {
     final TodoItemBean bean = mkBean(ctx);
     await bean.deleteAll();
+
+    return Response.json(null);
   }
 }

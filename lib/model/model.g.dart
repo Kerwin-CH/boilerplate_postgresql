@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of boilerplate_mongo.api;
+part of boilerplate_postgresql.model;
 
 // **************************************************************************
 // Generator: SerializerGenerator
@@ -16,9 +16,6 @@ abstract class _$TodoItemSerializer implements Serializer<TodoItem> {
       }
       if (model.title != null) {
         ret["title"] = model.title;
-      }
-      if (model.message != null) {
-        ret["message"] = model.message;
       }
       if (model.finished != null) {
         ret["finished"] = model.finished;
@@ -39,7 +36,6 @@ abstract class _$TodoItemSerializer implements Serializer<TodoItem> {
     }
     model.id = map["id"];
     model.title = map["title"];
-    model.message = map["message"];
     model.finished = map["finished"];
     return model;
   }

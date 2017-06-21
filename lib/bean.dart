@@ -1,12 +1,10 @@
-part of boilerplate_mongo.api;
+part of boilerplate_postgresql.api;
 
 /// The bean
 class TodoItemBean extends Bean<TodoItem> {
   final StrField id = new StrField('id');
 
   final StrField title = new StrField('title');
-
-  final StrField message = new StrField('message');
 
   final BoolField finished = new BoolField('finished');
 
@@ -18,7 +16,6 @@ class TodoItemBean extends Bean<TodoItem> {
   List<SetColumn> toSetColumns(TodoItem todo, [bool isUpdate = false]) {
     final ret = <SetColumn>[]
       ..add(title.set(todo.title))
-      ..add(message.set(todo.message))
       ..add(finished.set(todo.finished));
     if (!isUpdate) {
       ret.add(id.set(todo.id));
@@ -33,8 +30,7 @@ class TodoItemBean extends Bean<TodoItem> {
         .ifNotExists()
         .named(tableName)
         .strCol(id.name, primary: true, length: 50)
-        .strCol(title.name)
-        .strCol(message.name)
+        .strCol(title.name, length: 100)
         .boolCol(finished.name);
 
     await execCreateTable(st);
