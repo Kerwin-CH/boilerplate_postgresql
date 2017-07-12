@@ -39,7 +39,7 @@ class TodoApi {
     String id = ctx.pathParams['id'];
     final TodoItemBean bean = mkBean(ctx);
 
-    TodoItem res = await bean.findOne(id);
+    TodoItem res = await bean.findById(id);
     return Response.json(todoItemSerializer.serialize(res));
   }
 
@@ -53,7 +53,7 @@ class TodoApi {
     todo.id = id;
     await bean.insert(todo);
 
-    List<TodoItem> res = await bean.findAll();
+    TodoItem res = await bean.findById(id);
     return Response.json(todoItemSerializer.serialize(res));
   }
 
@@ -65,7 +65,7 @@ class TodoApi {
     final String id = todo.id;
     await bean.update(todo);
 
-    TodoItem res = await bean.findOne(id);
+    TodoItem res = await bean.findById(id);
     return Response.json(todoItemSerializer.serialize(res));
   }
 
@@ -75,7 +75,7 @@ class TodoApi {
     final TodoItemBean bean = mkBean(ctx);
     await bean.setFinished(id);
 
-    TodoItem res = await bean.findOne(id);
+    TodoItem res = await bean.findById(id);
     return Response.json(todoItemSerializer.serialize(res));
   }
 
@@ -85,7 +85,7 @@ class TodoApi {
     final TodoItemBean bean = mkBean(ctx);
     await bean.setUnfinished(id);
 
-    TodoItem res = await bean.findOne(id);
+    TodoItem res = await bean.findById(id);
     return Response.json(todoItemSerializer.serialize(res));
   }
 

@@ -1,6 +1,5 @@
 import 'package:jaguar/jaguar.dart';
 import 'package:boilerplate_postgresql/api.dart';
-import 'package:jaguar_reflect/jaguar_reflect.dart';
 import 'package:postgresql/postgresql.dart' as pg;
 import 'package:jaguar_query_postgresql/jaguar_query_postgresql.dart';
 
@@ -17,7 +16,7 @@ main() async {
   final proxy = new PrefixedProxyServer('/', 'http://localhost:8082/');
 
   final server = new Jaguar();
-  server.addApi(reflectJaguar(new TodoApi()));
+  server.addApiReflected((new TodoApi()));
   server.addApi(proxy);
   await server.serve();
 }

@@ -2,11 +2,11 @@ part of boilerplate_postgresql.api;
 
 /// The bean
 class TodoItemBean extends Bean<TodoItem> {
-  final StrField id = new StrField('id');
+  static final StrField id = new StrField('id');
 
-  final StrField title = new StrField('title');
+  static final StrField title = new StrField('title');
 
-  final BoolField finished = new BoolField('finished');
+  static final BoolField finished = new BoolField('finished');
 
   /// Table name for the model this bean manages
   String get tableName => 'todos';
@@ -26,65 +26,64 @@ class TodoItemBean extends Bean<TodoItem> {
   TodoItem fromMap(Map map) => todoItemSerializer.fromMap(map);
 
   Future<Null> createTable() async {
-    final st = new CreateStatement()
+    final st = new Create()
         .ifNotExists()
         .named(tableName)
-        .strCol(id.name, primary: true, length: 50)
-        .strCol(title.name, length: 100)
-        .boolCol(finished.name);
+        .addStr(id.name, primary: true, length: 50)
+        .addStr(title.name, length: 100)
+        .addBool(finished.name);
 
     await execCreateTable(st);
   }
 
   /// Inserts a new todoitem into table
   Future insert(TodoItem todo) async {
-    final inserter = inserterQ.setMany(toSetColumns(todo));
-    await execInsert(inserter);
+    final st = inserter.setMany(toSetColumns(todo));
+    await execInsert(st);
   }
 
   /// Updates a todoitem
   Future update(TodoItem todo) async {
-    final updater =
-        updaterQ.where(this.id.eq(todo.id)).setMany(toSetColumns(todo, true));
-    await execUpdate(updater);
+    final st = updater.where(id.eq(todo.id)).setMany(toSetColumns(todo, true));
+    await execUpdate(st);
   }
 
   Future setFinished(String id) async {
-    final updater = updaterQ.where(this.id.eq(id)).set(finished.set(true));
-    await execUpdate(updater);
+    final st = updater.where(TodoItemBean.id.eq(id)).set(finished, true);
+    await execUpdate(st);
   }
 
   Future setUnfinished(String id) async {
-    final updater = updaterQ.where(this.id.eq(id)).set(finished.set(false));
-    await execUpdate(updater);
+    final st = updater.where(TodoItemBean.id.eq(id)).set(finished, false);
+    await execUpdate(st);
   }
 
   /// Finds one todoitem by [id]
-  Future<TodoItem> findOne(String id) async {
-    final finder = finderQ.where(this.id.eq(id));
-    return execFindOne(finder);
+  Future<TodoItem> findById(String id) async {
+    final st = finder.where(TodoItemBean.id.eq(id));
+    return execFindOne(st);
   }
 
   /// Finds all todoitems
   Future<List<TodoItem>> findAll() async {
-    final finder = finderQ;
-    return await (await execFind(finder)).toList();
+    final st = finder;
+    return await (await execFind(st)).toList();
   }
 
   /// Deletes a todoitem by [id]
   Future delete(String id) async {
-    final deleter = deleterQ.where(this.id.eq(id));
-    await execDelete(deleter);
+    final st = remover.where(TodoItemBean.id.eq(id));
+    await execRemove(st);
   }
 
   /// Deletes all todoitems
   Future deleteAll() async {
-    final deleter = deleterQ;
-    await execDelete(deleter);
+    final st = remover;
+    await execRemove(st);
   }
 
   Future drop() async {
-    final st = new DropTableStatement().named('todos').onlyIfExists();
+    final st = new Drop().named('todos').onlyIfExists();
     await adapter.dropTable(st);
   }
 }
