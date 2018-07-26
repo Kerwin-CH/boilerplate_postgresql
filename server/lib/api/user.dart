@@ -85,7 +85,7 @@ class UserAccountRoutes {
     if (ctx.acceptsHtml) return Redirect(Uri.parse('/home/index.html'));
     // Otherwise return JSON
     return Response.json({
-      'msg': 'Successfully signed up! Check your email for confirmation code.'
+      'msg': 'Successfully logged in!'
     });
   }
 
