@@ -74,6 +74,12 @@ class UserAccountRoutes {
 
   @Post(path: '/logout')
   Future<void> logout(Context ctx) async {
+    User user = await Authorizer.authorize<User>(ctx, throwOnFail: false);
+    if (user == null)
+      return Response.json({
+        'msg': 'You must login on order to log out.'
+      }, statusCode: 401);
+      
     Session session = await ctx.session;
     session.remove('id');
   }
