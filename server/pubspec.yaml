@@ -18,7 +18,7 @@ dependencies:
   jaguar_dev_proxy: ^2.1.1
   tasks_common:
     path: ../tasks_common
-  jaguar_auth: ^2.1.1
+  jaguar_auth: ^2.1.9
   jaguar_reflect: ^2.1.1
   jaguar_orm: # ^2.1.1
 

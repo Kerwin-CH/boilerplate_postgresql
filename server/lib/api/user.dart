@@ -15,23 +15,42 @@ class UserAccountRoutes {
     return UserBean(adapter);
   }
 
-  @Post(path: '/signup')
+  @PostJson(path: '/signup')
 
   /// Signup endpoint
   Future<void> signup(Context ctx) async {
-    Map<String, String> form = await ctx.bodyAsUrlEncodedForm();
+    // Is a user already logged in?
+    User user = await Authorizer.authorize<User>(ctx, throwOnFail: false);
+    if (user != null)
+      return Response.json({
+        'msg': 'Already logged in as ${user.name}! Please logout before signup.'
+      }, statusCode: 401);
 
+    // Parse the signup form
+    Map<String, String> form = await ctx.bodyAsUrlEncodedForm();
     String username = form['username'];
     String password = form['password'];
 
+    // Does an account with the username already exist?
+    UserBean bean = await _makeBean(ctx);
+    user = await bean.findByUsername(username);
+    print(user);
+    if (user != null)
+      return Response.json({'msg': 'Username $username already exists!'},
+          statusCode: 401);
+
     // TODO validate
 
-    UserBean bean = await _makeBean(ctx);
-    final user = User(
+    // Create the user
+    user = User(
         id: Ulid().toUuid(),
         name: username,
         password: pwdHasher.hash(password));
     await bean.insert(user);
+
+    return Response.json({
+      'msg': 'Successfully signed up! Check your email for confirmation code.'
+    });
   }
 
   @Post(path: '/login')
