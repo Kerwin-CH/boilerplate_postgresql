@@ -49,7 +49,7 @@ class UserAccountRoutes {
 
     // Write response
     // Redirect if it is form request
-    if(ctx.acceptsHtml) return Redirect(Uri.parse('/home/index.html'));
+    if (ctx.acceptsHtml) return Redirect(Uri.parse('/login/index.html'));
     // Otherwise return JSON
     return Response.json({
       'msg': 'Successfully signed up! Check your email for confirmation code.'
@@ -57,32 +57,45 @@ class UserAccountRoutes {
   }
 
   @Post(path: '/login')
-  Future<void> login(Context ctx) async {
-    Map<String, String> form = await ctx.bodyAsUrlEncodedForm();
 
+  /// Login endpoint
+  Future<void> login(Context ctx) async {
+    // Parse the login form
+    Map<String, dynamic> form = await ctx.bodyAsMap();
     String username = form['username'];
     String password = form['password'];
 
+    // Check if an account with [username] exists
     UserBean bean = await _makeBean(ctx);
-
     User user = await bean.findByUsername(username);
+    if (user == null)
+      throw Response.json({'msg': 'Username $username does not exist!'},
+          statusCode: 401);
 
-    if (user == null) throw Response(null, statusCode: 401);
+    // Check if password is correct
     if (user.password != pwdHasher.hash(password))
-      throw Response(null, statusCode: 401);
+      throw Response.json({'msg': 'Incorrect password!'}, statusCode: 401);
 
+    // Authorize the session
     Session session = await ctx.session;
     session['id'] = user.id;
+
+    // Write response
+    // Redirect if it is form request
+    if (ctx.acceptsHtml) return Redirect(Uri.parse('/home/index.html'));
+    // Otherwise return JSON
+    return Response.json({
+      'msg': 'Successfully signed up! Check your email for confirmation code.'
+    });
   }
 
   @Post(path: '/logout')
   Future<void> logout(Context ctx) async {
     User user = await Authorizer.authorize<User>(ctx, throwOnFail: false);
     if (user == null)
-      return Response.json({
-        'msg': 'You must login in order to logout.'
-      }, statusCode: 401);
-      
+      return Response.json({'msg': 'You must login in order to logout.'},
+          statusCode: 401);
+
     Session session = await ctx.session;
     session.remove('id');
   }

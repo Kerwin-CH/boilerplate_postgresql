@@ -22,10 +22,15 @@ abstract class UserApi {
     return error;
   }
 
-  static Future<void> login(String username, String password) async {
-    // TODO add login on response
-    Map response = await post(baseUrl)
+  static Future<ApiError> login(String username, String password) async {
+    ApiError error;
+    await post(baseUrl)
         .path('/account/login')
-        .json({'username': username, 'password': password}).one();
+        .json({'username': username, 'password': password}).one(
+            onError: (StringResponse resp) {
+      Map map = resp.decode();
+      error = ApiError(map['msg'], []);
+    });
+    return error;
   }
 }
