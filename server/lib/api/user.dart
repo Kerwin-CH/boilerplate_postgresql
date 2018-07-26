@@ -19,7 +19,6 @@ class UserAccountRoutes {
 
   /// Signup endpoint
   Future<void> signup(Context ctx) async {
-    print(ctx.headers['Accept']);
     // Is a user already logged in?
     User user = await Authorizer.authorize<User>(ctx, throwOnFail: false);
     if (user != null)

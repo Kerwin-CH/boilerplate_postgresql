@@ -14,5 +14,6 @@ main() async {
   server.add(reflect(TaskRoutes()));
   server.add(proxy);
 
-  await server.serve();
+  server.log.onRecord.listen(print);
+  await server.serve(logRequests: true);
 }
