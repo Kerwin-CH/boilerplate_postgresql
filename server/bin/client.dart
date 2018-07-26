@@ -27,11 +27,11 @@ Future<Null> deleteAll() async {
 
 Future<Map> insert(Map map) async {
   String url = "http://$kHostname:$kPort/api/todos";
-  http.Response resp = await _client.post(url, body: JSON.encode(map));
+  http.Response resp = await _client.post(url, body: json.encode(map));
 
   await printHttpClientResponse(resp);
 
-  return JSON.decode(resp.body);
+  return json.decode(resp.body);
 }
 
 Future<Null> getAll() async {
@@ -50,11 +50,11 @@ Future<Null> getById(String id) async {
 
 Future<Map> update(Map map) async {
   String url = "http://$kHostname:$kPort/api/todos";
-  http.Response resp = await _client.put(url, body: JSON.encode(map));
+  http.Response resp = await _client.put(url, body: json.encode(map));
 
   await printHttpClientResponse(resp);
 
-  return JSON.decode(resp.body);
+  return json.decode(resp.body);
 }
 
 Future<Null> setFinished(String id) async {

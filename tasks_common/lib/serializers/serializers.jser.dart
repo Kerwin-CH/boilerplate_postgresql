@@ -32,8 +32,8 @@ abstract class _$TaskSerializer implements Serializer<Task> {
     if (model == null) return null;
     Map<String, dynamic> ret = <String, dynamic>{};
     setMapValue(ret, 'id', model.id);
-    setMapValue(ret, 'title', model.title);
     setMapValue(ret, 'userId', model.userId);
+    setMapValue(ret, 'title', model.title);
     return ret;
   }
 
@@ -42,8 +42,8 @@ abstract class _$TaskSerializer implements Serializer<Task> {
     if (map == null) return null;
     final obj = new Task();
     obj.id = map['id'] as String;
-    obj.title = map['title'] as String;
     obj.userId = map['userId'] as String;
+    obj.title = map['title'] as String;
     return obj;
   }
 }

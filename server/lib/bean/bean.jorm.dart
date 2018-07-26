@@ -83,10 +83,10 @@ abstract class _TaskBean implements Bean<Task> {
     return adapter.remove(remove);
   }
 
-  Future<Task> findByUser(String userId,
+  Future<List<Task>> findByUser(String userId,
       {bool preload: false, bool cascade: false}) async {
     final Find find = finder.where(this.userId.eq(userId));
-    return findOne(find);
+    return findMany(find);
   }
 
   Future<List<Task>> findByUserList(List<User> models,
@@ -103,20 +103,20 @@ abstract class _TaskBean implements Bean<Task> {
 
 abstract class _UserBean implements Bean<User> {
   final id = new StrField('id');
-  final name = new StrField('name');
   final password = new StrField('password');
+  final name = new StrField('name');
   Map<String, Field> _fields;
   Map<String, Field> get fields => _fields ??= {
         id.name: id,
-        name.name: name,
         password.name: password,
+        name.name: name,
       };
   User fromMap(Map map) {
     User model = new User();
 
     model.id = adapter.parseValue(map['id']);
-    model.name = adapter.parseValue(map['name']);
     model.password = adapter.parseValue(map['password']);
+    model.name = adapter.parseValue(map['name']);
 
     return model;
   }
@@ -127,12 +127,12 @@ abstract class _UserBean implements Bean<User> {
 
     if (only == null) {
       ret.add(id.set(model.id));
-      ret.add(name.set(model.name));
       ret.add(password.set(model.password));
+      ret.add(name.set(model.name));
     } else {
       if (only.contains(id.name)) ret.add(id.set(model.id));
-      if (only.contains(name.name)) ret.add(name.set(model.name));
       if (only.contains(password.name)) ret.add(password.set(model.password));
+      if (only.contains(name.name)) ret.add(name.set(model.name));
     }
 
     return ret;
@@ -141,8 +141,8 @@ abstract class _UserBean implements Bean<User> {
   Future<void> createTable() async {
     final st = Sql.create(tableName);
     st.addStr(id.name, primary: true, length: 50);
+    st.addStr(password.name, length: 50);
     st.addStr(name.name);
-    st.addStr(password.name);
     return adapter.createTable(st);
   }
 

@@ -1,4 +1,4 @@
-name: boilerplate_postgresql
+name: jaguar_boilerplate_postgresql_server
 description: Boilerplate for using postgresql with Jaguar.dart
 version: 2.1.1
 authors:
@@ -13,13 +13,14 @@ dependencies:
   jaguar: ^2.1.24
   jaguar_postgres: ^2.1.1
   jaguar_serializer: ^2.1.8
-  jaguar_query: ^2.1.9
   jaguar_query_postgres: ^2.1.1
   ulid: ^1.0.0
   jaguar_dev_proxy: ^2.1.1
   tasks_common:
     path: ../tasks_common
   jaguar_auth: ^2.1.1
+  jaguar_reflect: ^2.1.1
+  jaguar_orm: # ^2.1.1
 
 dev_dependencies:
   test: ^1.2.0
