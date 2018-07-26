@@ -1,6 +1,6 @@
 part of 'api.dart';
 
-@Controller(path: '/tasks')
+@Controller(path: '/api/tasks')
 class TaskRoutes {
   Future<TaskBean> _makeBean(Context ctx) async {
     final pg.PostgreSQLConnection db = await pool.injectInterceptor(ctx);

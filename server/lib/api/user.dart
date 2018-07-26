@@ -7,7 +7,7 @@ part of 'api.dart';
 final pwdHasher =
     MD5Hasher('kljdf83dflkgjdöloit49t45849turdklgsjöldf3459p809sdlkxjbvlkzdjs');
 
-@Controller(path: '/account')
+@Controller(path: '/api/account')
 class UserAccountRoutes {
   Future<UserBean> _makeBean(Context ctx) async {
     final pg.PostgreSQLConnection db = await pool.injectInterceptor(ctx);
@@ -34,7 +34,6 @@ class UserAccountRoutes {
     // Does an account with the username already exist?
     UserBean bean = await _makeBean(ctx);
     user = await bean.findByUsername(username);
-    print(user);
     if (user != null)
       return Response.json({'msg': 'Username $username already exists!'},
           statusCode: 401);
@@ -77,7 +76,7 @@ class UserAccountRoutes {
     User user = await Authorizer.authorize<User>(ctx, throwOnFail: false);
     if (user == null)
       return Response.json({
-        'msg': 'You must login on order to log out.'
+        'msg': 'You must login in order to logout.'
       }, statusCode: 401);
       
     Session session = await ctx.session;
