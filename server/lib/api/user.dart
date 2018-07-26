@@ -45,8 +45,6 @@ class UserAccountRoutes {
 
     User user = await bean.findByUsername(username);
 
-    print(user);
-
     if (user == null) throw Response(null, statusCode: 401);
     if (user.password != pwdHasher.hash(password))
       throw Response(null, statusCode: 401);

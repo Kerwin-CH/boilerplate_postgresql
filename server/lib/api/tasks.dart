@@ -14,8 +14,7 @@ class TaskRoutes {
     User user = await Authorizer.authorize<User>(ctx);
 
     // Parse body
-    final Map body = await ctx.bodyAsJsonMap();
-    final Task task = Task.serializer.fromMap(body);
+    final Task task = await ctx.bodyAsJson(convert: Task.serializer.fromMap);
 
     // Make bean
     final TaskBean bean = await _makeBean(ctx);
