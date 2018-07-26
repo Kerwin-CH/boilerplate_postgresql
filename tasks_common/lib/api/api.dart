@@ -3,12 +3,23 @@ import 'package:jaguar_resty/jaguar_resty.dart';
 
 const baseUrl = 'http://localhost:8080/api';
 
+class ApiError {
+  final String message;
+  final Set<String> fields;
+  ApiError(this.message, Iterable<String> fields) : fields = Set.from(fields);
+}
+
 abstract class UserApi {
-  static Future<void> signup(String username, String password) async {
-    // TODO add login on response
-    Map response = await post(baseUrl)
+  static Future<ApiError> signup(String username, String password) async {
+    ApiError error;
+    await post(baseUrl)
         .path('/account/signup')
-        .json({'username': username, 'password': password}).one();
+        .json({'username': username, 'password': password}).one(
+            onError: (StringResponse resp) {
+      Map map = resp.decode();
+      error = ApiError(map['msg'], []);
+    });
+    return error;
   }
 
   static Future<void> login(String username, String password) async {
