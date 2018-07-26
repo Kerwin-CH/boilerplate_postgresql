@@ -10,6 +10,7 @@ environment:
 dependencies:
   jaguar_serializer: ^2.1.8
   jaguar_common: ^2.1.1
+  jaguar_resty: ^2.5.16
 
 dev_dependencies:
   jaguar_serializer_cli: ^2.1.24
