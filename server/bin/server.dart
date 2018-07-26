@@ -9,6 +9,7 @@ main() async {
   final proxy = PrefixedProxyServer('/', 'http://localhost:8082/');
 
   final server = Jaguar();
+  server.userFetchers[User] = MyUserFetcher();
   server.add(reflect(UserAccountRoutes()));
   server.add(reflect(TaskRoutes()));
   server.add(proxy);

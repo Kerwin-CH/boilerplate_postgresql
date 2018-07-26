@@ -14,9 +14,31 @@ import 'package:jaguar_boilerplate_postgresql_server/bean/bean.dart';
 import 'package:jaguar_auth/jaguar_auth.dart';
 import '../bean/bean.dart';
 
+export 'package:tasks_common/models.dart';
+
 part 'tasks.dart';
 part 'user.dart';
 
 final pool = PostgresPool('example', password: 'dart_jaguar');
 
 Future<void> pgInterceptor(Context ctx) => pool.injectInterceptor(ctx);
+
+class MyUserFetcher extends UserFetcher<User> {
+  Future<UserBean> _makeBean(Context ctx) async {
+    final pg.PostgreSQLConnection db = await pool.injectInterceptor(ctx);
+    final adapter = PgAdapter.FromConnection(db);
+    return UserBean(adapter);
+  }
+
+  @override
+  Future<User> byAuthenticationId(Context ctx, String authenticationId) async {
+    UserBean bean = await _makeBean(ctx);
+    return bean.findByUsername(authenticationId);
+  }
+
+  @override
+  Future<User> byAuthorizationId(Context ctx, String authorizationId) async {
+    UserBean bean = await _makeBean(ctx);
+    return bean.find(authorizationId);
+  }
+}

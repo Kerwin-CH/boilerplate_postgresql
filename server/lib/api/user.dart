@@ -43,7 +43,7 @@ class UserAccountRoutes {
 
     UserBean bean = await _makeBean(ctx);
 
-    User user = await bean.byUsername(username);
+    User user = await bean.findByUsername(username);
 
     print(user);
 

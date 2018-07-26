@@ -38,6 +38,6 @@ class UserBean extends Bean<User> with _UserBean {
 
   String get tableName => 'otm_simple_post';
 
-  Future<User> byUsername(String name) =>
+  Future<User> findByUsername(String name) =>
       findOne(finder.where(this.name.eq(name)));
 }
