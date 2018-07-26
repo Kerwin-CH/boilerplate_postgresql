@@ -52,7 +52,7 @@ class UserAccountRoutes {
       throw Response(null, statusCode: 401);
 
     Session session = await ctx.session;
-    session.add('id', username);
+    session['id'] = user.id;
   }
 
   @Post(path: '/logout')
