@@ -27,7 +27,7 @@ class UserAccountRoutes {
       }, statusCode: 401);
 
     // Parse the signup form
-    Map<String, String> form = await ctx.bodyAsUrlEncodedForm();
+    Map<String, dynamic> form = await ctx.bodyAsMap();
     String username = form['username'];
     String password = form['password'];
 
