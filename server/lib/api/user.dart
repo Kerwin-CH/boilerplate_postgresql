@@ -19,6 +19,7 @@ class UserAccountRoutes {
 
   /// Signup endpoint
   Future<void> signup(Context ctx) async {
+    print(ctx.headers['Accept']);
     // Is a user already logged in?
     User user = await Authorizer.authorize<User>(ctx, throwOnFail: false);
     if (user != null)
@@ -47,6 +48,10 @@ class UserAccountRoutes {
         password: pwdHasher.hash(password));
     await bean.insert(user);
 
+    // Write response
+    // Redirect if it is form request
+    if(ctx.acceptsHtml) return Redirect(Uri.parse('/home/index.html'));
+    // Otherwise return JSON
     return Response.json({
       'msg': 'Successfully signed up! Check your email for confirmation code.'
     });
