@@ -18,11 +18,13 @@ void main() {
     String password = passwordEl.value;
     ApiError error = await UserApi.signup(username, password);
     if(error == null) {
+      errorsBox.classes.add('hide');
       successMsgBox.text = "Account for $username created successfully!";
       signupBox.classes.add('hide');
       successBox.classes.remove('hide');
       return;
     }
     errorsBox.text = error.message;
+    errorsBox.classes.remove('hide');
   });
 }

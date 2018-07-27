@@ -76,6 +76,22 @@ a:visited {
     color: #7fff69;
 }
 
+.success-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.errors {
+    color: #e80000;
+    font-size: 12px;
+    background-color: #ffffff;
+    padding: 3px;
+    margin: 5px;
+    box-sizing: border-box;
+}
+
 .hide {
   display: none;
 }
+

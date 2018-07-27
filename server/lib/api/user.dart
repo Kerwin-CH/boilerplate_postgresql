@@ -97,6 +97,6 @@ class UserAccountRoutes {
           statusCode: 401);
 
     Session session = await ctx.session;
-    session.remove('id');
+    session.clear();
   }
 }

@@ -13,17 +13,18 @@
 </head>
 
 <body>
+    <h1>Welcome to Jaguar task example!</h1>
+    <div>Login to view your tasks. Or <a href="/signup/index.html">Signup here.</a></div>
 
-<div id="content">
-
-    <div>
-        <input id="username" type="text" name="username" placeholder="Your name">
-        <input id="password" type="text" name="password" placeholder="Password">
-        <div id="errors"></div>
-        <div class="actions"><div id="submit" type="submit">Submit</div></div>
-    </div>
-
-</div>
+    <main>
+        <h2 class="form-title">Login</h2>
+        <div class="login-form">
+            <input class="text-input" id="username" type="text" name="username" placeholder="Your name">
+            <input class="text-input" id="password" type="password" name="password" placeholder="Password">
+            <div id="errors" class="errors hide"></div>
+            <div class="button" id="submit" type="submit">Login</div>
+        </div>
+    </main>
 
 </body>
 </html>

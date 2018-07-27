@@ -34,6 +34,16 @@ abstract class UserApi {
     });
     return error;
   }
+
+  static Future<ApiError> logout() async {
+    ApiError error;
+    await post(baseUrl).path('/account/logout').one(
+        onError: (StringResponse resp) {
+      Map map = resp.decode();
+      error = ApiError(map['msg'], []);
+    });
+    return error;
+  }
 }
 
 abstract class TasksApi {

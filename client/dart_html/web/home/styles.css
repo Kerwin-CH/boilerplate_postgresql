@@ -20,6 +20,15 @@ header {
   background-color: white;
   color: black;
   box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.header-menu {
+  cursor: pointer;
+}
+
+.header-menu:active {
+  color: gray;
 }
 
 #title {

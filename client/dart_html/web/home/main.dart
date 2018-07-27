@@ -7,6 +7,7 @@ import 'package:http/browser_client.dart';
 
 TextAreaElement get newTaskText => querySelector('.new-task-text');
 DivElement get taskListEl => querySelector('#task-list');
+DivElement get logoutEl => querySelector('#logout');
 
 DivElement createTaskElement(Task task) {
   return DivElement()
@@ -45,6 +46,13 @@ Future<void> updateTasks() async {
 
 main() async {
   globalClient = BrowserClient();
+
+  logoutEl.onClick.listen((_) async {
+    var error = await UserApi.logout();
+    if(error == null) {
+      window.location.replace('/login_ajax/index.html');
+    }
+  });
 
   updateTasks();
   newTaskText.onKeyDown.listen((KeyboardEvent ke) async {

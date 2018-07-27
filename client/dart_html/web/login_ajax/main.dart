@@ -15,9 +15,11 @@ void main() {
     String password = passwordEl.value;
     ApiError error = await UserApi.login(username, password);
     if(error == null) {
+      errorsBox.classes.add('hide');
       window.location.replace('/home/index.html');
       return;
     }
     errorsBox.text = error.message;
+    errorsBox.classes.remove('hide');
   });
 }
