@@ -6,5 +6,5 @@ part 'serializers.jser.dart';
 @GenSerializer(ignore: ['password', 'authorizationId'])
 class UserSerializer extends Serializer<User> with _$UserSerializer {}
 
-@GenSerializer()
+@GenSerializer(ignore: ['userId'])
 class TaskSerializer extends Serializer<Task> with _$TaskSerializer {}

@@ -9,7 +9,7 @@ class TaskRoutes {
   }
 
   @PostJson()
-  Future<Task> insert(Context ctx) async {
+  Future<List<Task>> insert(Context ctx) async {
     // Authorize
     User user = await Authorizer.authorize<User>(ctx);
 
@@ -26,7 +26,7 @@ class TaskRoutes {
     await bean.insert(task);
 
     /// Fetch it
-    return bean.find(id);
+    return await bean.findByUser(user.id);
   }
 
   @GetJson()
