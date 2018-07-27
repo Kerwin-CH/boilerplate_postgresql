@@ -29,6 +29,14 @@ header {
 main {
   width: 100%;
   height: calc(100% - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+section {
+  width: 100%;
+  max-width: 300px;
 }
 
 .text-input {
@@ -39,4 +47,58 @@ main {
     background-color: #ececec;
     box-shadow: 1px 1px 1px 1px #0000004d;
     margin: 5px;
+    box-sizing: border-box;
+}
+
+.new-task-text {
+    width: 100%;
+}
+
+#task-list {
+  margin: 5px;
+  box-shadow: 1px 1px 2px 2px #0000003d;
+  background-color: white;
+  color: black;
+  width: 100%;
+}
+
+.task-item {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  color: black;
+  padding: 5px;
+  border-bottom: 1px solid #009ac461;
+  align-items: center;
+}
+
+.task-item .task-title {
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    margin-right: 5px;
+    flex: 1;
+}
+
+.task-item:hover {
+  background: #cff4ff;
+}
+
+.task-item .task-delete {
+    color: red;
+    cursor: pointer;
+}
+
+.task-item .task-delete:hover {
+    font-weight: bold;
+}
+
+.task-item .task-delete:active {
+    color: black;
+}
+
+.no-tasks-msg {
+    padding: 15px 5px;
+    color: #9c9c9c;
 }

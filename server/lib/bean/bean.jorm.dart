@@ -8,20 +8,20 @@ part of 'bean.dart';
 
 abstract class _TaskBean implements Bean<Task> {
   final id = new StrField('id');
-  final userId = new StrField('user_id');
   final title = new StrField('title');
+  final userId = new StrField('user_id');
   Map<String, Field> _fields;
   Map<String, Field> get fields => _fields ??= {
         id.name: id,
-        userId.name: userId,
         title.name: title,
+        userId.name: userId,
       };
   Task fromMap(Map map) {
     Task model = new Task();
 
     model.id = adapter.parseValue(map['id']);
-    model.userId = adapter.parseValue(map['user_id']);
     model.title = adapter.parseValue(map['title']);
+    model.userId = adapter.parseValue(map['user_id']);
 
     return model;
   }
@@ -32,12 +32,12 @@ abstract class _TaskBean implements Bean<Task> {
 
     if (only == null) {
       ret.add(id.set(model.id));
-      ret.add(userId.set(model.userId));
       ret.add(title.set(model.title));
+      ret.add(userId.set(model.userId));
     } else {
       if (only.contains(id.name)) ret.add(id.set(model.id));
-      if (only.contains(userId.name)) ret.add(userId.set(model.userId));
       if (only.contains(title.name)) ret.add(title.set(model.title));
+      if (only.contains(userId.name)) ret.add(userId.set(model.userId));
     }
 
     return ret;
@@ -46,9 +46,9 @@ abstract class _TaskBean implements Bean<Task> {
   Future<void> createTable() async {
     final st = Sql.create(tableName);
     st.addStr(id.name, primary: true, length: 50);
+    st.addStr(title.name, length: 150);
     st.addStr(userId.name,
         foreignTable: userBean.tableName, foreignCol: 'id', length: 50);
-    st.addStr(title.name);
     return adapter.createTable(st);
   }
 

@@ -7,6 +7,7 @@ part 'bean.jorm.dart';
 @GenBean(
   columns: const {
     'id': PrimaryKey(length: 50),
+    'title': const Column(length: 150),
     'userId': const BelongsTo(UserBean, length: 50, byHasMany: true),
   },
 )

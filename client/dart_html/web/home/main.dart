@@ -11,17 +11,17 @@ DivElement get taskListEl => querySelector('#task-list');
 DivElement createTaskElement(Task task) {
   return DivElement()
     ..classes.add('task-item')
-    ..children.add(DivElement()
+    ..children.add(PreElement()
       ..text = task.title
       ..classes.add('task-title'))
     ..children.add(DivElement()
-      ..text = 'X'
+      ..text = '\u232B'
       ..classes.add('task-delete')
       ..onClick.listen((_) async {
         try {
           List<Task> tasks = await TasksApi.remove(task.id);
           displayTasks(tasks);
-        } on ApiError catch(e) {
+        } on ApiError catch (e) {
           // TODO
         }
       }));
@@ -29,7 +29,13 @@ DivElement createTaskElement(Task task) {
 
 void displayTasks(List<Task> tasks) {
   taskListEl.children.clear();
-  for(Task task in tasks) taskListEl.children.add(createTaskElement(task));
+  if (tasks.isEmpty) {
+    taskListEl.children.add(DivElement()
+      ..text = "You have no tasks! Add a task using the input box above."
+      ..classes.add('no-tasks-msg'));
+    return;
+  }
+  for (Task task in tasks) taskListEl.children.add(createTaskElement(task));
 }
 
 Future<void> updateTasks() async {
@@ -41,12 +47,14 @@ main() async {
   globalClient = BrowserClient();
 
   updateTasks();
-  newTaskText.onKeyUp.listen((KeyboardEvent ke) async {
+  newTaskText.onKeyDown.listen((KeyboardEvent ke) async {
     if (ke.keyCode == KeyCode.ENTER && ke.shiftKey) {
+      ke.preventDefault();
       try {
         List<Task> tasks = await TasksApi.add(newTaskText.value);
         displayTasks(tasks);
-      } on ApiError catch(e) {
+        newTaskText.value = '';
+      } on ApiError catch (e) {
         // TODO
       }
     }
