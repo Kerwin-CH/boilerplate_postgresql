@@ -66,3 +66,11 @@ form {
 
 .button:active {
 }
+
+a {
+    color: #7fff69;
+}
+
+a:visited {
+    color: #7fff69;
+}
