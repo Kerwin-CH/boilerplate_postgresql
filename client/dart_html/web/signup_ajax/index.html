@@ -13,20 +13,23 @@
 </head>
 
 <body>
+    <h1>Welcome to Jaguar Task example!</h1>
+    <div>Create an account. Or <a href="/login_ajax/index.html">Login here.</a></div>
 
-  <div id="content">
-      <div id="signup-box">
-          <input id="username" type="text" name="username" placeholder="Your name">
-          <input id="password" type="text" name="password" placeholder="Password">
+  <main>
+      <h2 class="form-title">Signup</h2>
+      <div class="signup-form" id="signup-box">
+          <input class="text-input" id="username" type="text" name="username" placeholder="Your name">
+          <input class="text-input" id="password" type="text" name="password" placeholder="Password">
           <div id="errors"></div>
-          <div class="actions"><div id="submit" type="submit">Submit</div></div>
+          <div id="submit" class="button" type="submit">Submit</div>
       </div>
 
       <div id="success-box" class="success-box hide">
           <div id="success-message" class="message"></div>
           <a href="/login/index.html"><div>Login</div></a>
       </div>
-  </div>
+  </main>
 
 
 </body>
