@@ -19,7 +19,7 @@ export 'package:tasks_common/models.dart';
 part 'tasks.dart';
 part 'user.dart';
 
-final pool = PostgresPool('example', password: 'dart_jaguar');
+final pool = PostgresPool('jaguar_learn', password: 'dart_jaguar');
 
 Future<void> pgInterceptor(Context ctx) => pool.injectInterceptor(ctx);
 

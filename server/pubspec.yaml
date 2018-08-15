@@ -1,34 +1,29 @@
 name: jaguar_boilerplate_postgresql_server
 description: Boilerplate for using postgresql with Jaguar.dart
-version: 2.1.1
+version: 2.2.0
 authors:
 - Ravi Teja Gudapati <tejainece@gmail.com>
 homepage: http://jaguar-dart.github.io
 
 environment:
-  sdk: '>=2.0.0-dev.55.0 <2.0.0'
+  sdk: '>=2.0.0 <3.0.0'
 
 dependencies:
-  postgres: ^1.0.0-beta.1
-  jaguar: ^2.1.35
-  jaguar_postgres: ^2.1.1
-  jaguar_serializer: ^2.1.8
-  jaguar_query_postgres: ^2.1.1
+  postgres: ^1.0.0
+  jaguar: ^2.2.6
+  jaguar_postgres: ^2.2.0
+  jaguar_serializer: ^2.2.0
+  jaguar_query_postgres: ^2.2.0
   ulid: ^1.0.0
-  jaguar_dev_proxy: ^2.1.1
+  jaguar_dev_proxy: ^2.2.0
   tasks_common:
     path: ../tasks_common
-  jaguar_auth: ^2.1.9
-  jaguar_reflect: ^2.1.1
-  jaguar_orm: # ^2.1.1
+  jaguar_auth: ^2.2.0
+  jaguar_reflect: ^2.2.0
+  jaguar_orm: ^2.2.1
 
 dev_dependencies:
   test: ^1.2.0
-  jaguar_serializer_cli: ^2.1.24
-  jaguar_orm_gen: ^2.1.14
-
-dependency_overrides:
-  build_runner: ^0.9.0
-
-#  jaguar_orm: # ^2.1.1
-#    path: ../../../jaguar/orm/orm
+  jaguar_serializer_cli: ^2.2.0
+  jaguar_orm_gen: ^2.2.1
+  build_runner: ^0.10.0

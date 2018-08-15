@@ -4,7 +4,7 @@ import 'package:jaguar_query_postgres/jaguar_query_postgres.dart';
 
 main() async {
   final PgAdapter adapter =
-      PgAdapter('example', username: 'postgres', password: 'dart_jaguar');
+      PgAdapter('jaguar_learn', username: 'postgres', password: 'dart_jaguar');
   await adapter.connect();
 
   var userBean = UserBean(adapter);
